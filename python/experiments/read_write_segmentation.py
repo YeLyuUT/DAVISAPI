@@ -18,7 +18,8 @@ EXAMPLE:
 
 import cv2
 from   davis import cfg,io,DAVISLoader
-
+print(cfg.YEAR)
+print(cfg.PHASE)
 # Load dataset
 db = DAVISLoader(year=cfg.YEAR,phase=cfg.PHASE)
 

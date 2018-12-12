@@ -25,7 +25,6 @@ def _load_annotation(filename,single_object):
   """ Load image given filename."""
 
   annotation,_ = imread_indexed(filename)
-
   if single_object:
     annotation = (annotation != 0).astype(np.uint8)
 
@@ -62,8 +61,7 @@ class BaseLoader(ImageCollection):
 
   def __init__(self,path,regex,load_func=None):
     super(BaseLoader, self).__init__(
-        osp.join(path + '/' + regex),load_func=load_func)
-
+        osp.join(path + '/' + regex),load_func=load_func)  
     # Sequence name
     self.name = osp.basename(path)
 
@@ -111,7 +109,7 @@ class Segmentation(BaseLoader):
   def __init__(self,path,single_object,regex="*.png"):
     super(Segmentation, self).__init__(path,regex,
        functools.partial(_load_annotation,single_object=single_object))
-
+    
     if len(self):
       # Extract color palette from image file
       self.color_palette = Image.open(self.files[0]).getpalette()

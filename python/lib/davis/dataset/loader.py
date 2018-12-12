@@ -27,7 +27,7 @@ import davis
 import numpy as np
 
 from PIL import Image
-from base import Sequence, Annotation, BaseLoader, Segmentation
+from .base import Sequence, Annotation, BaseLoader, Segmentation
 
 from ..misc.config import cfg,phase,db_read_sequences
 
@@ -67,13 +67,13 @@ class DAVISLoader(object):
       raise Exception("Single object segmentation only available for 'year=2016'")
 
     self._db_sequences = db_read_sequences(year,self._phase)
-
+    
     # Load sequences
     self.sequences = [Sequence(s.name)
         for s in self._db_sequences]
-
+    
     # Load sequences
-    self.annotations = [Annotation(s.name,self._single_object)
+    self.annotations = [Annotation(s.name,self._single_object) 
         for s in self._db_sequences]
 
     self._keys = dict(zip([s.name for s in self.sequences],
@@ -84,7 +84,7 @@ class DAVISLoader(object):
       assert len(sequence) == db_sequence.num_frames
 
     # Check number of annotations is correct
-    for annotation,db_sequence in zip(self.sequences,self._db_sequences):
+    for annotation,db_sequence in zip(self.annotations,self._db_sequences):
       if (self._phase == phase.TRAIN) or (self._phase == phase.VAL):
         assert len(annotation) == db_sequence.num_frames
       elif self._phase == phase.TESTDEV:
